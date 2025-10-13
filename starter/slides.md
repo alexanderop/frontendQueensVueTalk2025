@@ -234,8 +234,9 @@ url="https://play.vuejs.org/#eNqdU01v2zAM/SuELnGQIG62nQwn6Fbk0B22YutRF9ehE7W2ZOg
 ---
 
 ## layout: section
+---
 
-# 5) The Essentials You’ll Use Daily
+# The Essentials You’ll Use Daily
 
 ---
 
@@ -391,6 +392,19 @@ Goal: make it update automatically — no manual DOM changes.
 height="480px"
 url="https://play.vuejs.org/#eNqNkM1qwzAQx79K5xlqCk2wQdQG1IH6QFFSSu4hvXbNJqW0vdRD8S9PXWJj7uTsvf+0ltgT98KNtxHFQFSg9sIRBKToZtKo1llP0IHFFfSw8raFgquFNNLU1gSCNjQwTfyyfEJ9bXmrXy4viypoqnI5j4/igbB1Y0HIH0C1vpl0XF/v+qvlKKbKuEmwrW71C9FQK5lNAyLkqh/ZESEHh0q9UM98EaNm9SvpS1bZ1S6N+cqVYT4oIZJLZgu1+XnJGOuNp39ZrrH5P/JulCpkU7x4D+i1KcGC18A7TgeeZr7nj5gNk+6m4fAZ+YLArJ8ag9wDNk7SPetn3OV9+ZZqvMdwQm7C+VRNNzT/2peB+8nj36v+7t+K7vSdML/oyJj9Oag=="
 />
+
+---
+
+
+<div class="flex justify-center items-center h-full">
+  <Excalidraw
+    drawFilePath="./example.excalidraw.json"
+    class="w-[600px]"
+    :darkMode="true"
+    :background="false"
+  />
+</div>
+
 
 ---
 
