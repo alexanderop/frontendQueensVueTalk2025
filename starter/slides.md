@@ -310,6 +310,11 @@ layout: center
 # Lets build our own Ref 
 
 ---
+layout: two-cols
+heading: Building our own Ref
+---
+
+<template v-slot:default>
 
 ````md magic-move
 ```js
@@ -345,23 +350,6 @@ function ref(value) {
 ```
 
 ```js
-const effects = new Set()
-
-function effect(fn) {
-  effects.add(fn)
-  fn()
-}
-
-function ref(value) {
-  return {
-    get value() { return value },
-    set value(v) {
-      value = v
-      effects.forEach(fn => fn())
-    }
-  }
-}
-
 // usage
 const count = ref(0)
 effect(() => {
@@ -370,6 +358,80 @@ effect(() => {
 count.value++
 ```
 ````
+
+</template>
+
+<template v-slot:right>
+<div class="grid gap-6 mt-8 text-lg">
+
+<div v-click="0">
+  <div class="text-2xl font-bold mb-2">Store effects</div>
+  <div>Create a Set to track all functions that need to re-run when data changes</div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-2">Register effects</div>
+  <div>The <code>effect</code> function adds a callback to the Set and runs it immediately</div>
+</div>
+
+<div v-click="2">
+  <div class="text-2xl font-bold mb-2">Create reactive refs</div>
+  <div>The <code>ref</code> function wraps a value with getter/setter. When the value changes, all effects re-run</div>
+</div>
+
+<div v-click="3">
+  <div class="text-2xl font-bold mb-2">Use it!</div>
+  <div>Create a reactive counter, register an effect, and watch it automatically update when count changes</div>
+</div>
+
+</div>
+</template>
+
+---
+layout: center
+---
+
+# The Real Deal: Vue's Reactivity
+
+---
+
+<div class="text-center mb-8">
+  <div class="text-3xl font-bold mb-4">Core Mental Model</div>
+  <div class="text-2xl text-pink-400">"Reads <span class="text-white">track</span>, Writes <span class="text-white">trigger</span>"</div>
+</div>
+
+<div class="grid gap-8 mt-12 text-xl">
+
+<div v-click="0">
+  <div class="text-2xl font-bold mb-3">📖 When you READ</div>
+  <div class="pl-4">
+    Vue registers the current effect as a dependency for that value
+  </div>
+  <div class="pl-4 mt-2 opacity-70">
+    <code>count.value</code> → "Effect A depends on count"
+  </div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-3">✍️ When you WRITE</div>
+  <div class="pl-4">
+    Vue schedules all dependent effects to re-run
+  </div>
+  <div class="pl-4 mt-2 opacity-70">
+    <code>count.value++</code> → Re-run Effect A (not B, C, D...)
+  </div>
+</div>
+
+<div v-click="2" class="mt-6 border-t border-gray-700 pt-6">
+  <div class="text-2xl font-bold mb-3">🔧 How Vue does it</div>
+  <div class="grid grid-cols-2 gap-4 pl-4">
+    <div><code>ref()</code> → <span class="opacity-70">.value getter/setter</span></div>
+    <div><code>reactive()</code> → <span class="opacity-70">Proxy traps</span></div>
+    <div class="col-span-2">Scheduler → <span class="opacity-70">Batches updates, prevents redundant re-runs</span></div>
+  </div>
+</div>
+
+</div>
 
 ---
 
