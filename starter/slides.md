@@ -225,19 +225,74 @@ const count = ref(0)
 
 
 ---
+layout: two-cols
+heading: Single File Components
+---
 
-# Single File Components
+<template v-slot:default>
 
-A `.vue` file bundles everything in one place:
+````md magic-move
+```vue
+<template>
+  <div>Hello World</div>
+</template>
+```
 
-<VClicks class="space-y-2 mt-4">
+```vue
+<script setup>
+import { ref } from 'vue'
+const message = ref('Hello World')
+</script>
 
-- `<template>` — Your HTML structure
-- `<script setup>` — Your JavaScript logic
-- `<style>` — Your CSS (optional)
-- Each `.vue` file = one component
+<template>
+  <div>{{ message }}</div>
+</template>
+```
 
-</VClicks>
+```vue
+<script setup>
+import { ref } from 'vue'
+const message = ref('Hello World')
+</script>
+
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<style scoped>
+div {
+  color: #ff6bed;
+}
+</style>
+```
+````
+
+</template>
+
+<template v-slot:right>
+<div class="grid gap-6 mt-4">
+
+<div v-click="0">
+  <div class="text-2xl font-bold mb-2"><code>&lt;template&gt;</code></div>
+  <div class="text-lg">Your HTML structure</div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-2"><code>&lt;script setup&gt;</code></div>
+  <div class="text-lg">Your JavaScript logic</div>
+</div>
+
+<div v-click="2">
+  <div class="text-2xl font-bold mb-2"><code>&lt;style&gt;</code></div>
+  <div class="text-lg">Your CSS (optional)</div>
+</div>
+
+<div v-click="3" class="mt-4 text-xl opacity-80">
+  Each <code>.vue</code> file = one component
+</div>
+
+</div>
+</template>
 
 ---
 
