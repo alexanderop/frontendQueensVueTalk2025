@@ -2,7 +2,7 @@
 theme: '@alexop/slidev-theme-brand'
 addons:
   - '@alexop/slidev-addon-utils'
-title: Vue For Beginners
+title: All you need is (Love) Vue
 layout: cover
 info: |
   ## Vue For Beginners
@@ -14,16 +14,8 @@ info: |
   Learn more at [alexop.dev](https://alexop.dev)
 ---
 
-# Vue For Beginners  
-### Build understanding from the ground up
+# All you need is (Love) Vue
 
-By Alexander Opalic
-
----
-layout: section
----
-
-# The Plan
 
 ---
 
@@ -36,8 +28,6 @@ layout: section
 3. From plain HTML to automatic updates  
 4. Building the core idea in 6 lines  
 5. Components and local state  
-6. What you’ll actually use daily  
-7. Recap and quick challenge
 
 </VClicks>
 
@@ -66,14 +56,88 @@ heading: About me
 </template>
 
 ---
-layout: section
+layout: center
 ---
 
-# 1) Why Vue Exists
+#  Why Vue Exists
 
 ---
 
-# The manual way
+# Evan You & The Birth of Vue
+
+<VClicks class="space-y-2 text-xl">
+
+- **Background**: Art history major, MFA in Design & Technology from Parsons
+- **2012**: Joined Google Creative Labs prototyping browser experiments
+- **The Problem**: Angular had great data binding but too much complexity
+- **The Idea**: "What if I extract just the parts I like and make it lightweight?"
+- **2013**: Started Vue as a personal experiment in his free time
+- **Feb 2014**: Released Vue.js publicly — a framework by a designer, for developers
+
+</VClicks>
+
+---
+
+# 11 Years of Growth: The Vue Ecosystem
+
+<VClicks class="space-y-2 text-xl">
+
+- **Vue Router**: Official routing solution, evolved alongside the core
+- **State Management**: Vuex (2016) → Pinia (2022, now official)
+- **Nuxt**: Meta-framework for SSR, SSG, and full-stack apps (2016+)
+- **Vite**: Next-gen build tool created by Evan You (2020)
+- **Official DevTools**: Browser extensions for debugging Vue apps
+
+</VClicks>
+
+---
+
+<div class="flex justify-center items-center h-full">
+  <iframe
+    src="https://platform.twitter.com/embed/Tweet.html?id=590281695581982720&theme=dark"
+    width="550"
+    height="200"
+    frameborder="0"
+    scrolling="no"
+    class="rounded-lg"
+  ></iframe>
+</div>
+
+---
+
+````md magic-move
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter Button</title>
+  </head>
+  <body>
+    <button id="btn">Count: 0</button>
+  </body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter Button</title>
+  </head>
+  <body>
+    <button id="btn">Count: 0</button>
+
+    <script>
+      let count = 0;
+      const btn = document.getElementById('btn');
+    </script>
+  </body>
+</html>
+```
 
 ```html
 <!DOCTYPE html>
@@ -96,7 +160,7 @@ layout: section
     </script>
   </body>
 </html>
-
+```
 ````
 
 
@@ -112,6 +176,33 @@ No manual updates. No `document.querySelector()` acrobatics.
 
 # Vue to the rescue
 
+````md magic-move
+```vue
+<template>
+  <button>Count: 0</button>
+</template>
+```
+
+```vue
+<script setup>
+</script>
+
+<template>
+  <button>Count: 0</button>
+</template>
+```
+
+```vue
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+
+<template>
+  <button>Count: {{ count }}</button>
+</template>
+```
+
 ```vue
 <script setup>
 import { ref } from 'vue'
@@ -122,15 +213,31 @@ const count = ref(0)
   <button @click="count++">Count: {{ count }}</button>
 </template>
 ```
+````
 
 <VClicks class="space-y-2 mt-4">
 
-- Data lives inside `ref()`  
-- Template shows data directly  
-- Vue updates automatically when it changes 
+- Data lives inside `ref()`
+- Template shows data directly
+- Vue updates automatically when it changes
 
 </VClicks>
 
+
+---
+
+# Single File Components
+
+A `.vue` file bundles everything in one place:
+
+<VClicks class="space-y-2 mt-4">
+
+- `<template>` — Your HTML structure
+- `<script setup>` — Your JavaScript logic
+- `<style>` — Your CSS (optional)
+- Each `.vue` file = one component
+
+</VClicks>
 
 ---
 
@@ -141,13 +248,46 @@ url="https://play.vuejs.org/#eNp9kU1PAjEQhv/KpBc0EDDRE1mMSjjoQY167AXLgIVu27RTJNn
 />
 
 ---
-layout: section
+layout: center
 ---
 
 
-#  What’s Behind It
+# Lets build our own Ref 
 
 ---
+
+````md magic-move
+```js
+const effects = new Set()
+```
+
+```js
+const effects = new Set()
+
+function effect(fn) {
+  effects.add(fn)
+  fn()
+}
+```
+
+```js
+const effects = new Set()
+
+function effect(fn) {
+  effects.add(fn)
+  fn()
+}
+
+function ref(value) {
+  return {
+    get value() { return value },
+    set value(v) {
+      value = v
+      effects.forEach(fn => fn())
+    }
+  }
+}
+```
 
 ```js
 const effects = new Set()
@@ -174,6 +314,7 @@ effect(() => {
 })
 count.value++
 ```
+````
 
 ---
 
@@ -257,6 +398,23 @@ url="https://play.vuejs.org/#eNqdU01v2zAM/SuELnGQIG62nQwn6Fbk0B22YutRF9ehE7W2ZOg
 
 # Computed and watch
 
+````md magic-move
+```ts
+import { ref } from 'vue'
+
+const price = ref(10)
+const qty = ref(3)
+```
+
+```ts
+import { ref, computed } from 'vue'
+
+const price = ref(10)
+const qty = ref(3)
+
+const total = computed(() => price.value * qty.value)
+```
+
 ```ts
 import { ref, computed, watch } from 'vue'
 
@@ -269,11 +427,12 @@ watch(total, (t) => {
   console.log('total changed:', t)
 })
 ```
+````
 
 <VClicks class="space-y-2 mt-4">
 
-- `computed` caches automatically  
-- `watch` reacts to a single source  
+- `computed` caches automatically
+- `watch` reacts to a single source
 
 </VClicks>
 
@@ -323,6 +482,33 @@ npm run dev
 
 # Or just one file
 
+````md magic-move
+```html
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+```
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="count++">Count: {{ count }}</button>
+    </div>
+  </body>
+</html>
+```
+
 ```html
 <!doctype html>
 <html>
@@ -346,6 +532,7 @@ npm run dev
   </body>
 </html>
 ```
+````
 
 ---
 
