@@ -422,14 +422,6 @@ layout: center
   </div>
 </div>
 
-<div v-click="2" class="mt-6 border-t border-gray-700 pt-6">
-  <div class="text-2xl font-bold mb-3">🔧 How Vue does it</div>
-  <div class="grid grid-cols-2 gap-4 pl-4">
-    <div><code>ref()</code> → <span class="opacity-70">.value getter/setter</span></div>
-    <div><code>reactive()</code> → <span class="opacity-70">Proxy traps</span></div>
-    <div class="col-span-2">Scheduler → <span class="opacity-70">Batches updates, prevents redundant re-runs</span></div>
-  </div>
-</div>
 
 </div>
 
@@ -512,8 +504,11 @@ url="https://play.vuejs.org/#eNqdU01v2zAM/SuELnGQIG62nQwn6Fbk0B22YutRF9ehE7W2ZOg
 </VClicks>
 
 ---
+layout: two-cols
+heading: Computed and watch
+---
 
-# Computed and watch
+<template v-slot:default>
 
 ````md magic-move
 ```ts
@@ -546,12 +541,28 @@ watch(total, (t) => {
 ```
 ````
 
-<VClicks class="space-y-2 mt-4">
+</template>
 
-- `computed` caches automatically
-- `watch` reacts to a single source
+<template v-slot:right>
+<div class="grid gap-6 mt-8 text-lg">
 
-</VClicks>
+<div v-click="0">
+  <div class="text-2xl font-bold mb-2">Start with reactive values</div>
+  <div>Create refs for price and quantity - these will be the source of our derived data</div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-2">Add computed property</div>
+  <div>The <code>computed</code> function creates a derived value that automatically updates and caches its result</div>
+</div>
+
+<div v-click="2">
+  <div class="text-2xl font-bold mb-2">Watch for changes</div>
+  <div>The <code>watch</code> function lets you react to changes with side effects like logging or API calls</div>
+</div>
+
+</div>
+</template>
 
 ---
 
@@ -659,14 +670,29 @@ npm run dev
 
 ---
 
+# Next Steps
+
+<VClicks class="space-y-2 text-xl mt-6">
+
+- **Read the docs** — [vuejs.org](https://vuejs.org) has excellent guides and examples
+- **Build your own projects** — Practice is the best teacher
+- **Learn about testing** — Vitest + Vue Test Utils make testing enjoyable
+- **Explore VueUse** — Collection of composable utilities ([vueuse.org](https://vueuse.org))
+- **Try a UI library** — Nuxt UI, PrimeVue, or Vuetify for ready-made components
+- **Have fun!** — Experiment, break things, and enjoy the journey
+
+</VClicks>
+
+---
+
 # What we learned
 
 <VClicks class="space-y-2 text-xl">
 
-- Data lives in refs  
-- Templates react to data changes  
-- Effects re-run automatically  
-- Components isolate logic and state  
+- Data lives in refs
+- Templates react to data changes
+- Effects re-run automatically
+- Components isolate logic and state
 
 </VClicks>
 
