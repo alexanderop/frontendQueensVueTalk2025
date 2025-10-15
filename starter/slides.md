@@ -723,40 +723,76 @@ watch(total, (t) => {
 </template>
 
 ---
+layout: two-cols
+heading: v-model - Two-way binding
+---
 
-# Simple form
+<template v-slot:default>
 
+````md magic-move
 ```vue
-<script setup>
-import { ref } from 'vue'
-const name = ref('')
-const agree = ref(false)
-</script>
-
 <template>
-  <input v-model="name" placeholder="Your name">
-  <label><input type="checkbox" v-model="agree"> I agree</label>
-  <p>Hello {{ name }} (agreed: {{ agree }})</p>
+  <input :value="message">
 </template>
 ```
 
+```vue
+<template>
+  <input
+    :value="message"
+    @input="message = $event.target.value"
+  >
+</template>
+```
+
+```vue
+<template>
+  <input v-model="message">
+</template>
+```
+````
+
+</template>
+
+<template v-slot:right>
+<div class="grid gap-6 mt-8 text-lg">
+
+<div v-click="0">
+  <div class="text-2xl font-bold mb-2">One-way binding</div>
+  <div>With <code>:value</code>, data flows from component to input only. User typing doesn't update the ref</div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-2">Manual two-way binding</div>
+  <div>Add <code>@input</code> to update the ref when user types. Now data flows both ways, but it's verbose</div>
+</div>
+
+<div v-click="2">
+  <div class="text-2xl font-bold mb-2">v-model shortcut</div>
+  <div><code>v-model</code> is syntactic sugar that combines <code>:value</code> and <code>@input</code> automatically</div>
+</div>
+
+</div>
+</template>
+
 ---
 
-## layout: section
 
-# 6) Minimal Setup
+<VuePlayground
+height="480px"
+url="https://play.vuejs.org/#eNp9U01vEzEQ/Ssjc0grNR+o4bKklQBVohwAARfEcnDs2Y2L17Zsb7pRtP+dsTebLhLtzZ735nnmzfjI3jm32LfICrYJwisXIWBs3W1pVOOsj3AEjxX0UHnbwIyos9KURlgTIhjeINwkwsVsdjlGee1xDFdcByRksxzUSZcuERuneUS6AWyk2oPQPISbklXWNyXLcUKUcW2E/byxEjWh6b2SAeUK3Fkt0VPwp219roSQ5Zip+Rb16XIWigeHlCB2KP5sbUf8J+lc9EQB4H5o5CS4nCpu3O1H1NrC8Th40PdwkdmySLHBgb6/3CyTkymdmqTTZjlpna4hHjRCENahpMgitQ/HlCFVIN6hgEpj9zZF0mEulUcRlTUFCKvbxmSo5q6A1eKNxybfG97NH5WMuwKuVyuX8nsaaDLh18mEiF0s2e/hMcelVKb+R2NrPflbwGvXQbBaSXglhJhAc8+lakMB6/GBbNFz5XOtajNX1D+lCDQR/bT29fAuqdCqJFfIDnbFInljKlUvHoI1tKRZnEZoG6c0+i8ueRFKRrYPo6FJ0mAeP+VY9C1ejfE89v/EHwJtQkGHrx4D+j1twRmL3NdIPiX47vvn7NkZpNVpNbFfAL8hWdemGgfa+9ZIKnvCy9Xe569GE/gR7rqIJoxNpUITs8/8ktH3+/BC60/lXi/WOY8cZf1fLbhLtA=="
+/>
 
 ---
+
 
 # Create a project
 
-<VClicks class="space-y-2 text-xl">
 
 - Use **Create Vue** (official tool)  
 - Powered by **Vite**  
 - TypeScript optional  
 
-</VClicks>
 
 ```bash
 npm create vue@latest
@@ -822,11 +858,6 @@ npm run dev
 
 ---
 
-## layout: section
-
-# 7) Recap & Challenge
-
----
 
 # Next Steps
 
@@ -856,59 +887,12 @@ npm run dev
 
 ---
 
-# Quick challenge
-
-Build a small tip calculator.
-
-<VClicks class="space-y-2 mt-4">
-
-- Inputs: amount and percent  
-- Output: tip and total  
-- Use `ref` and `computed`  
-
-</VClicks>
-
-<Callout type="info" class="mt-4">
-Goal: make it update automatically — no manual DOM changes.
-</Callout>
-
----
-
-# Playground (tip calculator)
-
 <VuePlayground
 height="480px"
-url="https://play.vuejs.org/#eNqNkM1qwzAQx79K5xlqCk2wQdQG1IH6QFFSSu4hvXbNJqW0vdRD8S9PXWJj7uTsvf+0ltgT98KNtxHFQFSg9sIRBKToZtKo1llP0IHFFfSw8raFgquFNNLU1gSCNjQwTfyyfEJ9bXmrXy4viypoqnI5j4/igbB1Y0HIH0C1vpl0XF/v+qvlKKbKuEmwrW71C9FQK5lNAyLkqh/ZESEHh0q9UM98EaNm9SvpS1bZ1S6N+cqVYT4oIZJLZgu1+XnJGOuNp39ZrrH5P/JulCpkU7x4D+i1KcGC18A7TgeeZr7nj5gNk+6m4fAZ+YLArJ8ag9wDNk7SPetn3OV9+ZZqvMdwQm7C+VRNNzT/2peB+8nj36v+7t+K7vSdML/oyJj9Oag=="
+url="https://play.vuejs.org/#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"
 />
-
----
-
-
-<div class="flex justify-center items-center h-full">
-  <Excalidraw
-    drawFilePath="./example.excalidraw.json"
-    class="w-[600px]"
-    :darkMode="true"
-    :background="false"
-  />
-</div>
-
-
----
-
-## layout: section
-
-# Q & A
-
----
 
 # Thank You
 
-<div class="text-center mt-8">
-<Callout type="info">
-Slides and links: [alexop.dev](https://alexop.dev)
-</Callout>
-</div>
-```
 
 
