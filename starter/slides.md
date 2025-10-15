@@ -19,17 +19,87 @@ info: |
 
 ---
 
-# Agenda
+```mermaid
+mindmap
+  root((Vue))
+    Core
+      Reactivity
+        ref reactive computed
+        watch and watchEffect
+        Alien Signals
+      Components
+        Props and Emits
+        Slots
+        Lifecycle Hooks
+      Rendering
+        Virtual DOM
+        Template Compilation
+        Diffing and Keys
+      Directives
+        v-if v-for v-model
+        Custom directives
+    Composition API
+      setup
+      Composables
+      Derived State
+      Effects and Cleanup
+    State
+      Pinia
+        defineStore
+        Getters and Actions
+      Alternatives
+        Provide and Inject
+        Composable based state
+    Routing
+      Vue Router 4
+        Nested and Dynamic routes
+        Guards
+        Transitions
+    TypeScript
+      defineProps and defineEmits
+      Macros defineModel
+      Volar
+    Performance
+      Lazy loading
+      v-memo
+      Caching and Hydration
+    SSR and Fullstack
+      Nuxt 3
+        File based routing
+        Nitro engine
+        Islands architecture
+      Vite SSR
+    Tooling
+      Vite and Rollup
+      ESLint and Prettier
+      Vitest and Playwright
+      Vue Devtools
+    Ecosystem
+      UI frameworks
+        Vuetify
+        Naive UI
+        Quasar
+      Utilities
+        VueUse
+        Unplugin
+      Animation
+        Transition and Transition group
+        GSAP
+    Advanced
+      Custom renderer
+      Reactivity internals
+      Compiler and AST
+      Hydration
+    Architecture
+      Smart vs Dumb
+      Composition over Inheritance
+      Layered Design
+        UI
+        State
+        Domain
+        Infrastructure
+```
 
-<VClicks class="space-y-2 text-xl mt-6">
-
-1. Why Vue exists  
-2. What reactivity really means  
-3. From plain HTML to automatic updates  
-4. Building the core idea in 6 lines  
-5. Components and local state  
-
-</VClicks>
 
 ---
 layout: two-cols
@@ -448,11 +518,16 @@ url="https://play.vuejs.org/#eNp9Ustu2zAQ/JUFUSAOYksJ2l5c2Wib+pAe2qLtkYco1EpiQpE
 
 ---
 
-layout: section
-
----
-
  # Components
+
+ <div class="flex justify-center items-center h-full">
+  <Excalidraw
+    drawFilePath="./example.excalidraw.json"
+    class="w-[600px]"
+    :darkMode="true"
+    :background="false"
+  />
+</div>
 
 ---
 
@@ -483,10 +558,93 @@ url="https://play.vuejs.org/#eNqdU01v2zAM/SuELnGQIG62nQwn6Fbk0B22YutRF9ehE7W2ZOg
 
 ---
 
-## layout: section
+# Composables: Reusable Logic
+
+<VClicks class="space-y-2 text-xl">
+
+- Functions that use Vue's reactivity system
+- Extract and reuse logic across components
+- Convention: start with `use` (like `useCounter`, `useMouse`)
+- Return reactive state and functions to components
+
+</VClicks>
+
+---
+layout: two-cols
+heading: Building a Composable
 ---
 
-# The Essentials You’ll Use Daily
+<template v-slot:default>
+
+````md magic-move
+```vue
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+const increment = () => count.value++
+</script>
+
+<template>
+  <button @click="increment">
+    Count: {{ count }}
+  </button>
+</template>
+```
+
+```ts
+// composables/useCounter.js
+import { ref } from 'vue'
+
+export function useCounter() {
+  const count = ref(0)
+  const increment = () => count.value++
+
+  return { count, increment }
+}
+```
+
+```vue
+<script setup>
+import { useCounter } from './composables/useCounter'
+
+const { count, increment } = useCounter()
+</script>
+
+<template>
+  <button @click="increment">
+    Count: {{ count }}
+  </button>
+</template>
+```
+````
+
+</template>
+
+<template v-slot:right>
+<div class="grid gap-6 mt-8 text-lg">
+
+<div v-click="0">
+  <div class="text-2xl font-bold mb-2">Start with component logic</div>
+  <div>A simple counter component with its own state and logic</div>
+</div>
+
+<div v-click="1">
+  <div class="text-2xl font-bold mb-2">Extract to a composable</div>
+  <div>Move the logic into a reusable function. It's just a function that uses Vue's reactivity!</div>
+</div>
+
+<div v-click="2">
+  <div class="text-2xl font-bold mb-2">Use it in any component</div>
+  <div>Import and destructure the returned values. The logic is now reusable across your entire app</div>
+</div>
+
+</div>
+</template>
+
+---
+
+
+# The Essentials You'll Use Daily
 
 ---
 
